@@ -1,0 +1,35 @@
+# Archivos de entorno
+.env
+
+# Entorno virtual
+venv/
+.venv/
+
+# Archivos de configuración de Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+db.sqlite3-journal
+
+# Archivos de migración de Django
+**/migrations/*
+
+# Configuración local
+*.local
+*.bak
+*.swp
+
+# Archivos de compilación estáticos
+staticfiles/
+media/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Directorios de IDEs
+.vscode/
+.idea/
+
