@@ -19,6 +19,7 @@ class Menu(models.Model):
 class Mesa(models.Model):
     numero = models.IntegerField(unique=True)
     capacidad = models.IntegerField()
+    disponible = models.BooleanField(default=True)
 
     def __str__(self):
         return f'Mesa {self.numero} (Capacidad: {self.capacidad})'
