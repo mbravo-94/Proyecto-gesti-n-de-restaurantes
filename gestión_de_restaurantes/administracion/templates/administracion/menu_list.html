@@ -1,0 +1,95 @@
+{% extends "administracion/base.html" %}
+
+{% block content %}
+<h1>Lista de Menús</h1>
+<a class="btn btn-primary mb-3" href="{% url 'menu_create' %}">Añadir Nuevo Menú</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+            <th>Descripción</th>
+            <th>Imagen</th>
+            <th>Disponible</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for menu in menus %}
+        <tr>
+            <td>{{ menu.nombre }}</td>
+            <td>{{ menu.precio }}€</td>
+            <td>{{ menu.categoria }}</td>
+            <td>{{ menu.descripcion }}</td>
+            <td>
+                {% if menu.imagen %}
+                <a href="#" data-toggle="modal" data-target="#imageModal{{ menu.pk }}">
+                    <img src="{{ menu.imagen.url }}" alt="{{ menu.nombre }}" style="width: 100px; height: auto; cursor: pointer;">
+                </a>
+                <!-- Modal para la imagen -->
+                <div class="modal fade" id="imageModal{{ menu.pk }}" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel{{ menu.pk }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="imageModalLabel{{ menu.pk }}">{{ menu.nombre }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="{{ menu.imagen.url }}" alt="{{ menu.nombre }}" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                No disponible
+                {% endif %}
+            </td>
+            <td>
+                <!-- Botón para editar la disponibilidad -->
+                <button type="button" class="btn {% if menu.disponible %}btn-success{% else %}btn-danger{% endif %} btn-sm" data-toggle="modal" data-target="#disponibilidadModal{{ menu.pk }}">
+                    {% if menu.disponible %}Sí{% else %}No{% endif %}
+                </button>
+                <!-- Modal para cambiar la disponibilidad -->
+                <div class="modal fade" id="disponibilidadModal{{ menu.pk }}" tabindex="-1" role="dialog" aria-labelledby="disponibilidadModalLabel{{ menu.pk }}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="disponibilidadModalLabel{{ menu.pk }}">Cambiar Disponibilidad</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="{% url 'cambiar_disponibilidad' menu.pk %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="disponible">¿Está disponible?</label>
+                                        <select name="disponible" id="disponible" class="form-control">
+                                            <option value="True" {% if menu.disponible %}selected{% endif %}>Sí</option>
+                                            <option value="False" {% if not menu.disponible %}selected{% endif %}>No</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <a class="btn btn-warning btn-sm" href="{% url 'menu_edit' menu.pk %}">Editar</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'menu_confirm_delete' menu.pk %}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}
