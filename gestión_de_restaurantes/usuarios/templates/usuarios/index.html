@@ -8,9 +8,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <h1>Bienvenido a la sección de Usuarios</h1>
-        <p>Contenido de la aplicación de usuarios.</p>
+    <div class="container mt-5 text-center">
+        <h1>Bienvenido a la Sección de Usuarios</h1>
+        <p>Elige una opción para continuar:</p>
+        <div class="mt-4">
+            <a class="btn btn-primary btn-lg mr-3" href="{% url 'menu_disponible' %}" role="button">Ver Menús Disponibles</a>
+            <a class="btn btn-secondary btn-lg" href="{% url 'mesas_disponibles' %}" role="button">Ver Mesas Disponibles</a>
+        </div>
     </div>
 </body>
 </html>
