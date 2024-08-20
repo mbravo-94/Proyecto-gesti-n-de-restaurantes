@@ -7,10 +7,15 @@
     <title>Menú Disponible</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     {% load static %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
     <div class="container mt-5">
         <h1>Menús Disponibles</h1>
+        <p><strong>Mesa:</strong> {{ mesa.numero }}</p>
+
         <div class="row">
             {% for menu in menus %}
                 <div class="col-md-4">
@@ -29,6 +34,49 @@
                     </div>
                 </div>
             {% endfor %}
+        </div>
+
+        <!-- Botón para abrir el modal del carrito -->
+        <button type="button" class="btn btn-info mt-3" data-toggle="modal" data-target="#carritoModal">
+            Ver Carrito
+        </button>
+
+        <!-- Modal para mostrar el contenido del carrito -->
+        <div class="modal fade" id="carritoModal" tabindex="-1" role="dialog" aria-labelledby="carritoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="carritoModalLabel">Tu Carrito</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {% if carrito %}
+                            <ul class="list-group mb-3">
+                                {% for key, item in carrito.items %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        {{ item.nombre }} (x{{ item.cantidad }})
+                                        <span>${{ item.precio }}</span>
+                                        <!-- Botón para eliminar un ítem del carrito -->
+                                        <a href="{% url 'eliminar_del_carrito' key %}" class="btn btn-danger btn-sm ml-3">Eliminar</a>
+                                    </li>
+                                {% endfor %}
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Total (EUR)</span>
+                                    <strong>${{ total }}</strong>
+                                </li>
+                            </ul>
+                        {% else %}
+                            <p>Tu carrito está vacío.</p>
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{% url 'procesar_compra' %}" class="btn btn-success">Procesar Compra</a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>

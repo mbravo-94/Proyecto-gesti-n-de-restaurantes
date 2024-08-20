@@ -5,7 +5,7 @@
 <form method="post">
     {% csrf_token %}
     <div class="form-group">
-        {{ form.as_p }}
+        {{ form.as_p }}  <!-- Esto incluirá el campo 'disponible' si está en el formulario -->
     </div>
     <button type="submit" class="btn btn-success">Guardar</button>
     <a class="btn btn-secondary" href="{% url 'mesa_list' %}">Volver a la lista de mesas</a>

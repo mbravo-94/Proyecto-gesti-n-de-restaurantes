@@ -1,0 +1,23 @@
+<!-- administracion/templates/administracion/vista_camarero.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Órdenes en Proceso</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Órdenes en Proceso</h1>
+        <ul class="list-group">
+            {% for orden in ordenes %}
+                <li class="list-group-item">
+                    Mesa {{ orden.mesa.numero }}: {{ orden.cantidad }}x {{ orden.item.nombre }}
+                    <a href="#" class="btn btn-success btn-sm float-right">Marcar como Completada</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

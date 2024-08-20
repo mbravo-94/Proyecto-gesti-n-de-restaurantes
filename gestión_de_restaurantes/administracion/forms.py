@@ -25,7 +25,7 @@ class MenuForm(forms.ModelForm):
 class MesaForm(forms.ModelForm):
     class Meta:
         model = Mesa
-        fields = ['numero', 'capacidad']
+        fields = ['numero', 'capacidad', 'disponible']
 
 class EmpleadoForm(forms.ModelForm):
     class Meta:

@@ -5,8 +5,8 @@ class Menu(models.Model):
     precio = models.DecimalField(max_digits=6, decimal_places=2)
     descripcion = models.TextField()
     categoria = models.CharField(max_length=50)
-    imagen = models.ImageField(upload_to='menu_images/', null=True, blank=True)
-    disponible = models.BooleanField(default=True)  # Nuevo campo
+    imagen = models.ImageField(upload_to='menu_images/', null=True, blank=True, default='menu_images/default.jpg')
+    disponible = models.BooleanField(default=True)
 
     def __str__(self):
         return self.nombre
@@ -20,7 +20,8 @@ class Mesa(models.Model):
     numero = models.IntegerField(unique=True)
     capacidad = models.IntegerField()
     disponible = models.BooleanField(default=True)
-
+    reservada = models.BooleanField(default=False) 
+    
     def __str__(self):
         return f'Mesa {self.numero} (Capacidad: {self.capacidad})'
 
@@ -44,9 +45,17 @@ class Empleado(models.Model):
         ordering = ['apellido', 'nombre']
 
 class Venta(models.Model):
+    ESTADO_CHOICES = [
+        ('PENDIENTE', 'Pendiente'),
+        ('EN_PROCESO', 'En Proceso'),
+        ('COMPLETADA', 'Completada'),
+    ]
+
     fecha = models.DateTimeField(auto_now_add=True)
     item = models.ForeignKey(Menu, on_delete=models.CASCADE)
     cantidad = models.IntegerField()
+    mesa = models.ForeignKey('Mesa', on_delete=models.CASCADE)
+    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='PENDIENTE')
 
     def __str__(self):
         return f'Venta de {self.cantidad} {self.item.nombre} el {self.fecha}'

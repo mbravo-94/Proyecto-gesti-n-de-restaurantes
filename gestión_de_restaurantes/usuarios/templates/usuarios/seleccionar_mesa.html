@@ -1,0 +1,26 @@
+<!-- usuarios/templates/usuarios/seleccionar_mesa.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Mesa</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Seleccionar Mesa</h1>
+        {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="numero_mesa">Número de Mesa:</label>
+                <input type="number" class="form-control" id="numero_mesa" name="numero_mesa" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Confirmar</button>
+        </form>
+    </div>
+</body>
+</html>

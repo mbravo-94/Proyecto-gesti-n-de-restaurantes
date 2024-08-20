@@ -14,11 +14,16 @@ urlpatterns = [
     path('mesas/nueva/', views.mesa_create, name='mesa_create'),
     path('mesas/editar/<int:pk>/', views.mesa_edit, name='mesa_edit'),
     path('mesas/eliminar/<int:pk>/', views.MesaDelete.as_view(), name='mesa_delete'),
+    path('mesas/cambiar-disponibilidad/<int:pk>/', views.mesa_toggle_disponibilidad, name='mesa_toggle_disponibilidad'),
 
     path('empleados/', views.empleado_list, name='empleado_list'),
     path('empleados/nuevo/', views.empleado_create, name='empleado_create'),
     path('empleados/editar/<int:pk>/', views.empleado_edit, name='empleado_edit'),
     path('empleados/eliminar/<int:pk>/', views.EmpleadoDelete.as_view(), name='empleado_delete'),
     
+
+    path('cocina/', views.vista_cocina, name='vista_cocina'),
+    path('camarero/', views.vista_camarero, name='vista_camarero'),
+
     path('ventas/', views.venta_list, name='venta_list'),
 ]

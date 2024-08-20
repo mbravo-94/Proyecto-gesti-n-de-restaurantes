@@ -10,13 +10,22 @@
 <body>
     <div class="container mt-5">
         <h1>Mesas Disponibles</h1>
-        <ul class="list-group">
-            {% for mesa in mesas_disponibles %}
-                <li class="list-group-item">
-                    Mesa {{ mesa.numero }} - Capacidad: {{ mesa.capacidad }}
-                </li>
-            {% endfor %}
-        </ul>
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                {% for mesa in mesas %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Mesa {{ mesa.numero }}</h5>
+                                <p class="card-text">Capacidad: {{ mesa.capacidad }}</p>
+                                <button type="submit" name="mesa_id" value="{{ mesa.id }}" class="btn btn-primary">Reservar</button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </form>
     </div>
 </body>
 </html>

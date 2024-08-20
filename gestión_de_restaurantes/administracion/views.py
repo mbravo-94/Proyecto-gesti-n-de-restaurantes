@@ -5,7 +5,7 @@ from .forms import MenuForm, MesaForm, EmpleadoForm, VentaForm
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView
 
-# Vistas para Menu
+########################## Vistas para Menu ###########################
 def menu_list(request):
     menus = Menu.objects.all()
     return render(request, 'administracion/menu_list.html', {'menus': menus})
@@ -77,7 +77,16 @@ class MesaDelete(DeleteView):
     template_name = 'administracion/mesa_confirm_delete.html'
     success_url = reverse_lazy('mesa_list')
 
-# Vistas para Empleado
+def mesa_toggle_disponibilidad(request, pk):
+    mesa = get_object_or_404(Mesa, pk=pk)
+    if request.method == "POST":
+        disponible = request.POST.get('disponible') == 'True'
+        mesa.disponible = disponible
+        mesa.save()
+        return redirect('mesa_list')
+    return render(request, 'administracion/mesa_toggle_disponibilidad.html', {'mesa': mesa})
+
+################################ Vistas para Empleado #################################
 def empleado_list(request):
     empleados = Empleado.objects.all()
     return render(request, 'administracion/empleado_list.html', {'empleados': empleados})
@@ -108,7 +117,21 @@ class EmpleadoDelete(DeleteView):
     template_name = 'administracion/empleado_confirm_delete.html'
     success_url = reverse_lazy('empleado_list')
 
-# Vistas para Venta
+################################ vistas para cocina #################################
+
+def vista_cocina(request):
+    ordenes_pendientes = Venta.objects.filter(estado='PENDIENTE').order_by('fecha')
+    return render(request, 'administracion/vista_cocina.html', {'ordenes': ordenes_pendientes})
+
+################################ vistas para camarero  ################################
+
+def vista_camarero(request):
+    ordenes_en_proceso = Venta.objects.filter(estado='EN_PROCESO').order_by('fecha')
+    return render(request, 'administracion/vista_camarero.html', {'ordenes': ordenes_en_proceso})
+
+
+######################################## Vistas para Venta ####################################
+
 def venta_list(request):
     ventas = Venta.objects.all()
     return render(request, 'administracion/venta_list.html', {'ventas': ventas})
@@ -139,6 +162,6 @@ class VentaDelete(DeleteView):
     template_name = 'administracion/venta_confirm_delete.html'
     success_url = reverse_lazy('venta_list')
 
-# ################# Vista principal ################################
+##################### Vista principal ################################
 def index(request):
     return render(request, 'administracion/index.html')
