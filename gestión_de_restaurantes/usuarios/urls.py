@@ -12,3 +12,6 @@ path('', views.index, name='usuarios_index'),
     path('mesas/', views.mesas_disponibles_view, name='mesas_disponibles'),
     path('menu/', views.menu_disponible_view, name='menu_disponible'),
 ]
+
+
+
