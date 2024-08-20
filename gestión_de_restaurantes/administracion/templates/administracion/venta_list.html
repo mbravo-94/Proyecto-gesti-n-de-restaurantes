@@ -1,0 +1,25 @@
+{% extends "administracion/base.html" %}
+
+{% block content %}
+<h1>Lista de Ventas</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Menú</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for venta in ventas %}
+        <tr>
+            <td>{{ venta.fecha }}</td>
+            <td>{{ venta.menu }}</td>
+            <td>{{ venta.cantidad }}</td>
+            <td>{{ venta.total }}€</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

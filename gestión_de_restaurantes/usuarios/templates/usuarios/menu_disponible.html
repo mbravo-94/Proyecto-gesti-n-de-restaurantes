@@ -1,0 +1,35 @@
+<!-- usuarios/templates/usuarios/menu_disponible.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Disponible</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% load static %}
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Menús Disponibles</h1>
+        <div class="row">
+            {% for menu in menus %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        {% if menu.imagen %}
+                            <img src="{{ menu.imagen.url }}" class="card-img-top" alt="{{ menu.nombre }}">
+                        {% else %}
+                            <img src="{% static 'default_menu_image.jpg' %}" class="card-img-top" alt="Imagen no disponible">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ menu.nombre }}</h5>
+                            <p class="card-text">{{ menu.descripcion }}</p>
+                            <p class="card-text"><strong>Precio: </strong>${{ menu.precio }}</p>
+                            <a href="{% url 'agregar_al_carrito' menu.id %}" class="btn btn-success">Añadir al Carrito</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

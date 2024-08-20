@@ -1,0 +1,22 @@
+<!-- usuarios/templates/usuarios/mesas_disponibles.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesas Disponibles</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Mesas Disponibles</h1>
+        <ul class="list-group">
+            {% for mesa in mesas_disponibles %}
+                <li class="list-group-item">
+                    Mesa {{ mesa.numero }} - Capacidad: {{ mesa.capacidad }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
