@@ -126,8 +126,12 @@ def vista_cocina(request):
 ################################ vistas para camarero  ################################
 
 def vista_camarero(request):
-    ordenes_en_proceso = Venta.objects.filter(estado='EN_PROCESO').order_by('fecha')
-    return render(request, 'administracion/vista_camarero.html', {'ordenes': ordenes_en_proceso})
+    # Recuperar todas las ventas que están pendientes o en proceso
+    ordenes_pendientes = Venta.objects.filter(estado__in=['PENDIENTE', 'EN_PROCESO']).order_by('fecha')
+    context = {
+        'ordenes': ordenes_pendientes
+    }
+    return render(request, 'administracion/vista_camarero.html', context)
 
 
 ######################################## Vistas para Venta ####################################
@@ -162,6 +166,11 @@ class VentaDelete(DeleteView):
     template_name = 'administracion/venta_confirm_delete.html'
     success_url = reverse_lazy('venta_list')
 
+def cambiar_estado_venta(request, pk, nuevo_estado):
+    venta = get_object_or_404(Venta, pk=pk)
+    venta.estado = nuevo_estado
+    venta.save()
+    return redirect('vista_camarero')
 ##################### Vista principal ################################
 def index(request):
     return render(request, 'administracion/index.html')

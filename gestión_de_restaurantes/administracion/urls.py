@@ -22,8 +22,8 @@ urlpatterns = [
     path('empleados/eliminar/<int:pk>/', views.EmpleadoDelete.as_view(), name='empleado_delete'),
     
 
-    path('cocina/', views.vista_cocina, name='vista_cocina'),
     path('camarero/', views.vista_camarero, name='vista_camarero'),
+    path('cambiar-estado-venta/<int:pk>/<str:nuevo_estado>/', views.cambiar_estado_venta, name='cambiar_estado_venta'),
 
     path('ventas/', views.venta_list, name='venta_list'),
 ]

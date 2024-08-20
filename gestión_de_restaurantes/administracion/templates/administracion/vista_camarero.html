@@ -4,20 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Órdenes en Proceso</title>
+    <title>Pedidos del Camarero</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
-        <h1>Órdenes en Proceso</h1>
-        <ul class="list-group">
-            {% for orden in ordenes %}
-                <li class="list-group-item">
-                    Mesa {{ orden.mesa.numero }}: {{ orden.cantidad }}x {{ orden.item.nombre }}
-                    <a href="#" class="btn btn-success btn-sm float-right">Marcar como Completada</a>
-                </li>
-            {% endfor %}
-        </ul>
+        <h1>Pedidos Pendientes y en Proceso</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Mesa</th>
+                    <th>Item</th>
+                    <th>Cantidad</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for orden in ordenes %}
+                <tr>
+                    <td>{{ orden.mesa.numero }}</td>
+                    <td>{{ orden.item.nombre }}</td>
+                    <td>{{ orden.cantidad }}</td>
+                    <td>{{ orden.estado }}</td>
+                    <td>
+                        {% if orden.estado == 'PENDIENTE' %}
+                            <a href="{% url 'cambiar_estado_venta' orden.id 'EN_PROCESO' %}" class="btn btn-warning btn-sm">Marcar como En Proceso</a>
+                        {% elif orden.estado == 'EN_PROCESO' %}
+                            <a href="{% url 'cambiar_estado_venta' orden.id 'COMPLETADA' %}" class="btn btn-success btn-sm">Marcar como Completada</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
