@@ -125,9 +125,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+# STATICFILES_DIRS = [
+    #BASE_DIR / "gestión_de_restaurantes/pedidos_cocina/static",
+#]
 
 # MEDIA_URL: URL para archivos multimedia
 MEDIA_URL = '/media/'
