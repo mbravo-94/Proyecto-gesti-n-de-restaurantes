@@ -31,9 +31,16 @@ class Mesa(models.Model):
         ordering = ['numero']
 
 class Empleado(models.Model):
+    PUESTO_CHOICES = [
+        ('camarero', 'Camarero'),
+        ('cocinero', 'Cocinero'),
+        ('limpieza', 'Limpieza'),
+        ('mantenimiento', 'Mantenimiento'),
+    ]
+
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
-    puesto = models.CharField(max_length=100)
+    puesto = models.CharField(max_length=100, choices=PUESTO_CHOICES)  # Actualización aquí
     fecha_contratacion = models.DateField()
 
     def __str__(self):

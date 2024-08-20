@@ -9,6 +9,7 @@
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Puesto</th>
+            <th>Fecha de Contratación</th>  <!-- Nueva columna para la fecha de contratación -->
             <th>Acciones</th>
         </tr>
     </thead>
@@ -18,6 +19,7 @@
             <td>{{ empleado.nombre }}</td>
             <td>{{ empleado.apellido }}</td>
             <td>{{ empleado.puesto }}</td>
+            <td>{{ empleado.fecha_contratacion }}</td>  <!-- Mostrar la fecha de contratación -->
             <td>
                 <a class="btn btn-warning btn-sm" href="{% url 'empleado_edit' empleado.pk %}">Editar</a>
                 <a class="btn btn-danger btn-sm" href="{% url 'empleado_delete' empleado.pk %}">Eliminar</a>

@@ -174,3 +174,34 @@ def cambiar_estado_venta(request, pk, nuevo_estado):
 ##################### Vista principal ################################
 def index(request):
     return render(request, 'administracion/index.html')
+
+
+
+############Login Administrador ##############
+
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+
+# Vista de Login
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('index')  # Redirigir a la página de administración después del login
+        else:
+            return render(request, 'administracion/login.html', {'error': 'Credenciales inválidas'})
+    return render(request, 'administracion/login.html')
+
+# Vista de Logout
+def logout_view(request):
+    logout(request)
+    return redirect('login')  # Redirigir a la página de login después de cerrar sesión
+
+# Vista de la Página de Administración, protegida por login
+@login_required(login_url='login')
+def index(request):
+    return render(request, 'administracion/index.html')
