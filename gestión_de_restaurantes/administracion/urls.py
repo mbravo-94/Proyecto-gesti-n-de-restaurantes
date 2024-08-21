@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from views.pedidos_cocina import cocina_view
+
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -21,4 +23,6 @@ urlpatterns = [
     path('empleados/eliminar/<int:pk>/', views.EmpleadoDelete.as_view(), name='empleado_delete'),
     
     path('ventas/', views.venta_list, name='venta_list'),
+    
+    path('cocina/', views.cocina_view, name='cocina_view'),
 ]

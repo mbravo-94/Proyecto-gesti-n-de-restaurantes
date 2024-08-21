@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito de Compras</title>
+    <title>Pedidos en Cocina</title>
     <style>
         table {
             width: 100%;
@@ -14,31 +14,32 @@
         }
         th, td {
             padding: 10px;
-            text-align: center;
-        }
-        img {
-            width: 50px;
-            height: 50px;
+            text-align: left;
         }
     </style>
 </head>
 <body>
-
-    <h1>Carrito de Compras</h1>
-
-    <table id="cartTable">
+    <h1>Pedidos en Cocina</h1>
+    
+    <table>
         <thead>
             <tr>
+                <th>ID Pedido</th>
                 <th>Producto</th>
-                <th>Imagen</th>
-                <th>Precio</th>
                 <th>Cantidad</th>
+                <th>Fecha</th>
             </tr>
         </thead>
         <tbody>
-            <!-- Aquí se agregarán las filas dinámicamente -->
+            {% for venta in ventas %}
+            <tr>
+                <td>{{ venta.id }}</td>
+                <td>{{ venta.item.nombre }}</td>
+                <td>{{ venta.cantidad }}</td>
+                <td>{{ venta.fecha }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
-
 </body>
 </html>

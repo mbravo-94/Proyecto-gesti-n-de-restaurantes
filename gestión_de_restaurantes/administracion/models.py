@@ -54,4 +54,4 @@ class Venta(models.Model):
     class Meta:
         verbose_name = 'Venta'
         verbose_name_plural = 'Ventas'
-        ordering = ['fecha']
+        ordering = ['fecha'] 
