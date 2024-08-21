@@ -63,6 +63,7 @@ class Venta(models.Model):
     cantidad = models.IntegerField()
     mesa = models.ForeignKey('Mesa', on_delete=models.CASCADE)
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='PENDIENTE')
+    pagado = models.BooleanField(default=False)  # Nuevo campo para marcar si se ha pagado
 
     def __str__(self):
         return f'Venta de {self.cantidad} {self.item.nombre} el {self.fecha}'

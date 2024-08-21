@@ -2,41 +2,39 @@
 <html>
 <head>
     <title>Gestión de Restaurantes</title>
-    {% load static %} <!-- Cargar la biblioteca static -->
+    {% load static %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
     <link rel="stylesheet" type="text/css" href="{% static 'administracion/css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'administracion/css/styles_index.css' %}">
+
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{% url 'index' %}">Restaurante</a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'index' %}">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'menu_list' %}">Menús</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'mesa_list' %}">Mesas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'empleado_list' %}">Empleados</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'venta_list' %}">Ventas</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <main class="container mt-4">
+    <div class="sidebar">
+        <h4>Restaurante</h4>
+        <hr>
+        <a href="{% url 'index' %}">Dashboard</a>
+        <a href="#">Finanzas</a>
+        <a href="#">Pedidos</a>
+        <a href="#">Preparación de pedidos</a>
+        <a href="#">Lista de pedidos</a>
+        <a href="#">Cuentas</a>
+        <hr>
+        <a href="{% url 'menu_list' %}">Menú del restaurante</a>
+        <a href="{% url 'mesa_list' %}">Gestión de mesas</a>
+        <a href="{% url 'empleado_list' %}">Gestión de empleados</a>
+        <a href="#">Gestión de usuarios</a>
+        <hr>
+        <a href="{% url 'logout' %}" class="text-danger">Cerrar Sesión</a>
+    </div>
+
+    <div class="content">
         {% block content %}
         {% endblock %}
-    </main>
+    </div>
 </body>
 </html>

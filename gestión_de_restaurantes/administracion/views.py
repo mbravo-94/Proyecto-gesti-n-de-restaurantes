@@ -168,12 +168,49 @@ class VentaDelete(DeleteView):
 
 def cambiar_estado_venta(request, pk, nuevo_estado):
     venta = get_object_or_404(Venta, pk=pk)
-    venta.estado = nuevo_estado
-    venta.save()
+    
+    if nuevo_estado == 'COMPLETADA':
+        venta.estado = nuevo_estado
+        if 'marcar_pagado' in request.POST:
+            venta.pagado = True
+            # Cambiar la mesa a disponible si el pago está completo
+            venta.mesa.reservada = False
+            venta.mesa.disponible = True
+            venta.mesa.save()
+        venta.save()
+        
     return redirect('vista_camarero')
+
+def mesas_disponibles_view(request):
+    # Mostrar mesas que están disponibles, no reservadas y no asociadas a ventas sin pagar
+    mesas_disponibles = Mesa.objects.filter(disponible=True, reservada=False)
+    
+    return render(request, 'usuarios/mesas_disponibles.html', {'mesas': mesas_disponibles})
+
+
 ##################### Vista principal ################################
 def index(request):
-    return render(request, 'administracion/index.html')
+    return render(request, 'administracion/index.html')  # Llama a la pagina index.html 
+
+def index(request):
+    # Calcular los totales de pedidos
+    total_pedidos = Venta.objects.count()
+    pedidos_pendientes = Venta.objects.filter(estado='PENDIENTE').count()
+    pedidos_en_proceso = Venta.objects.filter(estado='EN_PROCESO').count()
+    pedidos_entregados = Venta.objects.filter(estado='COMPLETADA').count()
+
+    # Obtener las mesas disponibles
+    mesas_disponibles = Mesa.objects.filter(disponible=True, reservada=False)
+
+    context = {
+        'total_pedidos': total_pedidos,
+        'pedidos_pendientes': pedidos_pendientes,
+        'pedidos_en_proceso': pedidos_en_proceso,
+        'pedidos_entregados': pedidos_entregados,
+        'mesas_disponibles': mesas_disponibles,
+    }
+
+    return render(request, 'administracion/index.html', context)
 
 
 
@@ -205,3 +242,7 @@ def logout_view(request):
 @login_required(login_url='login')
 def index(request):
     return render(request, 'administracion/index.html')
+
+
+######################### Prueba_Index #########################
+
