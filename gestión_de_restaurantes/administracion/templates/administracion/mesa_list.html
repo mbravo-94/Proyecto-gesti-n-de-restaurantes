@@ -1,0 +1,37 @@
+{% extends "administracion/base.html" %}
+
+{% block content %}
+<h1>Lista de Mesas</h1>
+<a class="btn btn-primary mb-3" href="{% url 'mesa_create' %}">Añadir Nueva Mesa</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Número</th>
+            <th>Capacidad</th>
+            <th>Disponible</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for mesa in mesas %}
+        <tr>
+            <td>{{ mesa.numero }}</td>
+            <td>{{ mesa.capacidad }}</td>
+            <td>
+                <form method="post" action="{% url 'mesa_toggle_disponibilidad' mesa.pk %}">
+                    {% csrf_token %}
+                    <select name="disponible" class="form-control form-control-sm" onchange="this.form.submit()">
+                        <option value="True" {% if mesa.disponible %}selected{% endif %}>Sí</option>
+                        <option value="False" {% if not mesa.disponible %}selected{% endif %}>No</option>
+                    </select>
+                </form>
+            </td>
+            <td>
+                <a class="btn btn-warning btn-sm" href="{% url 'mesa_edit' mesa.pk %}">Editar</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'mesa_delete' mesa.pk %}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

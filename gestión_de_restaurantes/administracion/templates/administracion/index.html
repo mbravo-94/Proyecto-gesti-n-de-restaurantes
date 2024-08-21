@@ -1,0 +1,59 @@
+{% extends "administracion/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total de pedidos</h5>
+                    <p class="card-text display-4">{{ total_pedidos }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Pendientes</h5>
+                    <p class="card-text display-4 text-warning">{{ pedidos_pendientes }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">En proceso</h5>
+                    <p class="card-text display-4 text-info">{{ pedidos_en_proceso }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Entregados</h5>
+                    <p class="card-text display-4 text-success">{{ pedidos_entregados }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="mb-4">Mesas Disponibles</h3>
+            <div class="row">
+                {% for mesa in mesas_disponibles %}
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Mesa {{ mesa.numero }}</h5>
+                            <p class="card-text">Capacidad: {{ mesa.capacidad }}</p>
+                            <p class="card-text"><span class="badge badge-success">Disponible</span></p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

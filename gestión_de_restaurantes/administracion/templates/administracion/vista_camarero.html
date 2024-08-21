@@ -1,0 +1,16 @@
+<!-- administracion/vista_camarero.html -->
+{% for orden in ordenes %}
+<tr>
+    <td>{{ orden.mesa.numero }}</td>
+    <td>{{ orden.item.nombre }}</td>
+    <td>{{ orden.cantidad }}</td>
+    <td>{{ orden.estado }}</td>
+    <td>
+        <form action="{% url 'cambiar_estado_venta' orden.pk 'COMPLETADA' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success btn-sm">Marcar como Completada</button>
+            <input type="checkbox" name="marcar_pagado" value="True"> Cliente pagó
+        </form>
+    </td>
+</tr>
+{% endfor %}

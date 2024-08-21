@@ -1,0 +1,31 @@
+{% extends "administracion/base.html" %}
+
+{% block content %}
+<h1>Lista de Empleados</h1>
+<a class="btn btn-primary mb-3" href="{% url 'empleado_create' %}">Añadir Nuevo Empleado</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Puesto</th>
+            <th>Fecha de Contratación</th>  <!-- Nueva columna para la fecha de contratación -->
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for empleado in empleados %}
+        <tr>
+            <td>{{ empleado.nombre }}</td>
+            <td>{{ empleado.apellido }}</td>
+            <td>{{ empleado.puesto }}</td>
+            <td>{{ empleado.fecha_contratacion }}</td>  <!-- Mostrar la fecha de contratación -->
+            <td>
+                <a class="btn btn-warning btn-sm" href="{% url 'empleado_edit' empleado.pk %}">Editar</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'empleado_delete' empleado.pk %}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
