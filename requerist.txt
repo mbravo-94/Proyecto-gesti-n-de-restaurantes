@@ -1,0 +1,3 @@
+django
+pip install pillow
+pip install django-widget-tweaks

@@ -1,0 +1,19 @@
+<!-- templates/home.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Principal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5 text-center">
+        <h1>Bienvenido a la Gestión de Restaurantes</h1>
+        <p>Gestiona tus empleados, mesas, menús y ventas de manera eficiente.</p>
+        <a class="btn btn-primary btn-lg mt-3" href="{% url 'login' %}" role="button">Ir a Administración</a>
+        <a class="btn btn-secondary btn-lg mt-3 ml-3" href="{% url 'usuarios_index' %}" role="button">Ir a Usuarios</a>
+        <a class="btn btn-info btn-lg mt-3 ml-3" href="{% url 'vista_camarero' %}" role="button">Ir a Camarero</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{% extends "administracion/base.html" %}
+
+{% block content %}
+<div class="jumbotron text-center">
+    <h1 class="display-4">Bienvenido a la Gestión de Restaurantes</h1>
+    <p class="lead">Administra tus menús, mesas, empleados y ventas de manera sencilla.</p>
+    <hr class="my-4">
+    <p>Utiliza los botones de abajo para navegar por las diferentes secciones del sistema.</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'menu_list' %}" role="button">Gestionar Menús</a>
+    <a class="btn btn-secondary btn-lg" href="{% url 'mesa_list' %}" role="button">Gestionar Mesas</a>
+    <a class="btn btn-success btn-lg" href="{% url 'empleado_list' %}" role="button">Gestionar Empleados</a>
+    <a class="btn btn-info btn-lg" href="{% url 'venta_list' %}" role="button">Ver Ventas</a>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Menús</h5>
+                    <p class="card-text">Administra los menús del restaurante.</p>
+                    <a href="{% url 'menu_list' %}" class="btn btn-primary">Ir a Menús</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Mesas</h5>
+                    <p class="card-text">Gestiona las mesas disponibles y su capacidad.</p>
+                    <a href="{% url 'mesa_list' %}" class="btn btn-secondary">Ir a Mesas</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Empleados</h5>
+                    <p class="card-text">Controla la lista de empleados y sus datos.</p>
+                    <a href="{% url 'empleado_list' %}" class="btn btn-success">Ir a Empleados</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Ventas</h5>
+                    <p class="card-text">Revisa las ventas realizadas en el restaurante.</p>
+                    <a href="{% url 'venta_list' %}" class="btn btn-info">Ir a Ventas</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <!-- Botón para Cerrar Sesión -->
+    <a class="btn btn-danger btn-lg" href="{% url 'logout' %}" role="button">Cerrar Sesión</a>
+    <!-- Botón para Volver al Home -->
+    <a class="btn btn-warning btn-lg ml-3" href="{% url 'home' %}" role="button">Volver al Home</a>
+</div>
+
+{% endblock %}

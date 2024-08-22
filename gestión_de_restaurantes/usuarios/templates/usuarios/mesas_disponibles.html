@@ -1,0 +1,31 @@
+<!-- usuarios/templates/usuarios/mesas_disponibles.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesas Disponibles</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Mesas Disponibles</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                {% for mesa in mesas %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Mesa {{ mesa.numero }}</h5>
+                                <p class="card-text">Capacidad: {{ mesa.capacidad }}</p>
+                                <button type="submit" name="mesa_id" value="{{ mesa.id }}" class="btn btn-primary">Reservar</button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </form>
+    </div>
+</body>
+</html>
