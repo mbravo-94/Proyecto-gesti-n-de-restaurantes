@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Menu(models.Model):
     nombre = models.CharField(max_length=100)
     precio = models.DecimalField(max_digits=6, decimal_places=2)
@@ -16,12 +17,13 @@ class Menu(models.Model):
         verbose_name_plural = 'Menús'
         ordering = ['nombre']
 
+
 class Mesa(models.Model):
     numero = models.IntegerField(unique=True)
     capacidad = models.IntegerField()
     disponible = models.BooleanField(default=True)
-    reservada = models.BooleanField(default=False) 
-    
+    reservada = models.BooleanField(default=False)
+
     def __str__(self):
         return f'Mesa {self.numero} (Capacidad: {self.capacidad})'
 
@@ -29,6 +31,7 @@ class Mesa(models.Model):
         verbose_name = 'Mesa'
         verbose_name_plural = 'Mesas'
         ordering = ['numero']
+
 
 class Empleado(models.Model):
     PUESTO_CHOICES = [
@@ -51,10 +54,13 @@ class Empleado(models.Model):
         verbose_name_plural = 'Empleados'
         ordering = ['apellido', 'nombre']
 
+
 class Venta(models.Model):
     ESTADO_CHOICES = [
         ('PENDIENTE', 'Pendiente'),
         ('EN_PROCESO', 'En Proceso'),
+        ('ENTREGADO', 'Entregado'),
+        ('PENDIENTE_DE_PAGO', 'Pendiente de Pago'),
         ('COMPLETADA', 'Completada'),
     ]
 
