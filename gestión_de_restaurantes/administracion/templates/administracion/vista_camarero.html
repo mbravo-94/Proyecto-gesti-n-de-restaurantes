@@ -23,23 +23,16 @@
             <tbody>
                 {% for orden in ordenes %}
                 <tr>
-                    <td>{{ orden.mesa.numero }}</td>
+                    <td>{{ orden.id }}</td>
                     <td>{{ orden.item.nombre }}</td>
                     <td>{{ orden.cantidad }}</td>
-                    <td>{{ orden.estado }}</td>
                     <td>
-                        {% if orden.estado == 'PENDIENTE' %}
-                            <a href="{% url 'cambiar_estado_venta' orden.id 'EN_PROCESO' %}" class="btn btn-warning btn-sm">Marcar como En Proceso</a>
-                        {% elif orden.estado == 'EN_PROCESO' %}
-                            <a href="{% url 'cambiar_estado_venta' orden.id 'ENTREGADO' %}" class="btn btn-info btn-sm">Marcar como Entregado</a>
-                        {% elif orden.estado == 'ENTREGADO' %}
-                            <a href="{% url 'cambiar_estado_venta' orden.id 'PENDIENTE_DE_PAGO' %}" class="btn btn-primary btn-sm">Marcar como Pendiente de Pago</a>
-                        {% elif orden.estado == 'PENDIENTE_DE_PAGO' %}
-                            <a href="{% url 'cambiar_estado_venta_cocina' orden.id 'COMPLETADA' %}" class="btn btn-success btn-sm">Marcar como Completada</a>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
+                     {% if orden.estado == 'ENTREGADO' %}
+                        <a href="{% url 'cambiar_estado_venta' orden.id 'PENDIENTE_DE_PAGO' %}?next={{ request.path }}" class="btn btn-primary btn-sm">Marcar como Pendiente de Pago</a>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
             </tbody>
         </table>
     </div>

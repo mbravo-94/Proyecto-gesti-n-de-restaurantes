@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Menu, Mesa, Empleado, Venta
 from .forms import MenuForm, MesaForm, EmpleadoForm, VentaForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import DeleteView
 
 
@@ -131,12 +131,13 @@ def vista_cocina(request):
 
 ################################ vistas para camarero  ################################
 
+
 def vista_camarero(request):
-    # Recuperar todas las ventas que están pendientes, en proceso, entregadas o pendientes de pago
-    ordenes_pendientes = Venta.objects.filter(
-        estado__in=['PENDIENTE', 'EN_PROCESO', 'ENTREGADO', 'PENDIENTE_DE_PAGO']).order_by('fecha')
+    # Filtra las órdenes que están en estado 'ENTREGADO'
+    ordenes_listas = Venta.objects.filter(estado='ENTREGADO').order_by('fecha')
+    
     context = {
-        'ordenes': ordenes_pendientes
+        'ordenes': ordenes_listas
     }
     return render(request, 'administracion/vista_camarero.html', context)
 
@@ -177,7 +178,13 @@ def cambiar_estado_venta(request, pk, nuevo_estado):
     venta = get_object_or_404(Venta, pk=pk)
     venta.estado = nuevo_estado
     venta.save()
-    return redirect('vista_camarero')
+    
+    next_url = request.GET.get('next')
+    
+    if next_url:
+        return redirect(next_url)
+    else:
+        return redirect('index')
 
 
 

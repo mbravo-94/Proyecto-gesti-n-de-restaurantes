@@ -27,7 +27,7 @@ urlpatterns = [
     path('cambiar-estado-venta/<int:pk>/<str:nuevo_estado>/', views.cambiar_estado_venta, name='cambiar_estado_venta'),
     ############################################################################################################################
     path('cocina/', views.vista_cocina, name='pedidos_por_mesa'),
-    path('cambiar-estado-venta/<int:pk>/<str:nuevo_estado>/', views.cambiar_estado_venta, name='cambiar_estado_venta_cocina'),
+    path('cambiar-estado-venta/<int:pk>/<str:nuevo_estado>/', views.cambiar_estado_venta, name='cambiar_estado_venta'),
     #############################################################################################################################
     path('ventas/', views.venta_list, name='venta_list'),
 

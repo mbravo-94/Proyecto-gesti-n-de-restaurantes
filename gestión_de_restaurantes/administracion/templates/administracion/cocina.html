@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pedidos del Camarero</title>
+    <title>Pedidos en cocina</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -29,13 +29,10 @@
                     <td>{{ orden.estado }}</td>
                     <td>
                         {% if orden.estado == 'PENDIENTE' %}
-                            <a href="{% url 'cambiar_estado_venta' orden.id 'EN_PROCESO' %}" class="btn btn-warning btn-sm">Marcar como En Proceso</a>
+                            <a href="{% url 'cambiar_estado_venta' orden.id 'EN_PROCESO' %}?next={{ request.path }}" class="btn btn-warning btn-sm">Marcar como En Proceso</a>
                         {% elif orden.estado == 'EN_PROCESO' %}
-                            <a href="{% url 'cambiar_estado_venta' orden.id 'ENTREGADO' %}" class="btn btn-info btn-sm">Marcar como Entregado</a>
-                        {% elif orden.estado == 'ENTREGADO' %}
-                            <a href="{% url 'cambiar_estado_venta' orden.id 'PENDIENTE_DE_PAGO' %}" class="btn btn-primary btn-sm">Marcar como Pendiente de Pago</a>
-                        {% elif orden.estado == 'PENDIENTE_DE_PAGO' %}
-                            <a href="{% url 'cambiar_estado_venta' orden.id 'COMPLETADA' %}" class="btn btn-success btn-sm">Marcar como Completada</a>
+                            <a href="{% url 'cambiar_estado_venta' orden.id 'ENTREGADO' %}?next={{ request.path }}" class="btn btn-info btn-sm">Marcar como Entregado</a>
+                        
                         {% endif %}
                     </td>
                 </tr>

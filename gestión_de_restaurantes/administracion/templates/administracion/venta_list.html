@@ -7,7 +7,9 @@
         <tr>
             <th>Fecha</th>
             <th>Menú</th>
+            <th>Mesa</th>
             <th>Cantidad</th>
+            <th>Precio</th>
             <th>Total</th>
         </tr>
     </thead>
@@ -16,7 +18,9 @@
         <tr>
             <td>{{ venta.fecha }}</td>
             <td>{{ venta.menu }}</td>
+            <td>{{ venta.mesa }}</td>
             <td>{{ venta.cantidad }}</td>
+            <td>{{ venta.precio}}</td>
             <td>{{ venta.total }}€</td>
         </tr>
         {% endfor %}

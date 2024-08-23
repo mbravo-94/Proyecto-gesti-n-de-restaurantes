@@ -56,7 +56,7 @@ class Venta(models.Model):
         ('PENDIENTE', 'Pendiente'),
         ('EN_PROCESO', 'En Proceso'),
         ('ENTREGADO', 'Entregado'),
-        ('PENDIENTE_DE_PAGO', 'Pendiente de Pago'),
+        ('PENDIENTE DE PAGO', 'Pendiente de Pago'),
         ('COMPLETADA', 'Completada'),
     ]
     

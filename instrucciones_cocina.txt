@@ -3,3 +3,10 @@ orden en el que se reciben las ordenes de las mesas
 
 
 1 nº mesa         2 cantidad de platos         3 nombre del plato      4 ingredientes (nombre en la tabla de administración_menu)   5 estado (EN PROCESO/ PREPARADO) 
+
+
+
+
+
+
+en la vista ventas (http://127.0.0.1:8000/administracion/ventas/) añadir columna mesa, que aparezca el id del plato en la columna de menú, y añadir columna precio con la suma del dinero, la total será con las propinas de marina 
