@@ -35,7 +35,7 @@
                         {% elif orden.estado == 'ENTREGADO' %}
                             <a href="{% url 'cambiar_estado_venta' orden.id 'PENDIENTE_DE_PAGO' %}" class="btn btn-primary btn-sm">Marcar como Pendiente de Pago</a>
                         {% elif orden.estado == 'PENDIENTE_DE_PAGO' %}
-                            <a href="{% url 'cambiar_estado_venta_cocina' orden.id 'COMPLETADA' %}" class="btn btn-success btn-sm">Marcar como Completada</a>
+                            <a href="{% url 'cambiar_estado_venta' orden.id 'COMPLETADA' %}" class="btn btn-success btn-sm">Marcar como Completada</a>
                         {% endif %}
                     </td>
                 </tr>

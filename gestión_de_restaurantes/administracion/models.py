@@ -55,9 +55,12 @@ class Venta(models.Model):
     ESTADO_CHOICES = [
         ('PENDIENTE', 'Pendiente'),
         ('EN_PROCESO', 'En Proceso'),
+        ('ENTREGADO', 'Entregado'),
+        ('PENDIENTE_DE_PAGO', 'Pendiente de Pago'),
         ('COMPLETADA', 'Completada'),
     ]
-
+    
+    
     fecha = models.DateTimeField(auto_now_add=True)
     item = models.ForeignKey(Menu, on_delete=models.CASCADE)
     cantidad = models.IntegerField()

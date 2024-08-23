@@ -5,6 +5,7 @@ from .forms import MenuForm, MesaForm, EmpleadoForm, VentaForm
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView
 
+
 ########################## Vistas para Menu ###########################
 def menu_list(request):
     menus = Menu.objects.all()
@@ -117,17 +118,23 @@ class EmpleadoDelete(DeleteView):
     template_name = 'administracion/empleado_confirm_delete.html'
     success_url = reverse_lazy('empleado_list')
 
-################################ vistas para cocina #################################
+################################ vistas para cocina #################################   ##############################################
 
 def vista_cocina(request):
-    ordenes_pendientes = Venta.objects.filter(estado='PENDIENTE').order_by('fecha')
-    return render(request, 'administracion/vista_cocina.html', {'ordenes': ordenes_pendientes})
+    ordenes_pendientes = Venta.objects.filter(
+        estado__in=['PENDIENTE', 'EN_PROCESO', 'ENTREGADO', 'PENDIENTE_DE_PAGO']).order_by('fecha')
+    context = {
+        'ordenes': ordenes_pendientes
+    }
+    return render(request, 'administracion/cocina.html', context)
+
 
 ################################ vistas para camarero  ################################
 
 def vista_camarero(request):
-    # Recuperar todas las ventas que están pendientes o en proceso
-    ordenes_pendientes = Venta.objects.filter(estado__in=['PENDIENTE', 'EN_PROCESO']).order_by('fecha')
+    # Recuperar todas las ventas que están pendientes, en proceso, entregadas o pendientes de pago
+    ordenes_pendientes = Venta.objects.filter(
+        estado__in=['PENDIENTE', 'EN_PROCESO', 'ENTREGADO', 'PENDIENTE_DE_PAGO']).order_by('fecha')
     context = {
         'ordenes': ordenes_pendientes
     }
@@ -171,6 +178,9 @@ def cambiar_estado_venta(request, pk, nuevo_estado):
     venta.estado = nuevo_estado
     venta.save()
     return redirect('vista_camarero')
+
+
+
 ##################### Vista principal ################################
 def index(request):
     return render(request, 'administracion/index.html')

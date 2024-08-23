@@ -1,23 +1,45 @@
-<!-- administracion/templates/administracion/vista_cocina.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Órdenes de Cocina</title>
+    <title>Pedidos del Camarero</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
-        <h1>Órdenes Pendientes</h1>
-        <ul class="list-group">
-            {% for orden in ordenes %}
-                <li class="list-group-item">
-                    Mesa {{ orden.mesa.numero }}: {{ orden.cantidad }}x {{ orden.item.nombre }}
-                    <a href="#" class="btn btn-primary btn-sm float-right">Marcar como en Proceso</a>
-                </li>
-            {% endfor %}
-        </ul>
+        <h1>Pedidos Pendientes, en Proceso, Entregados y Pendientes de Pago</h1>
+        <h1>Pedidos en Cocina</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nº Mesa</th>
+                    <th>Cantidad de Platos</th>
+                    <th>Nombre del Plato</th>
+                    <th>Ingredientes</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for venta in ventas %}
+                    <tr>
+                        <td>{{ venta.mesa.numero }}</td>
+                        <td>{{ venta.cantidad }}</td>
+                        <td>{{ venta.item.nombre }}</td>
+                        <td>{{ venta.item.descripcion }}</td> <!-- Cambiar por venta.item.ingredientes si tienes un campo específico para los ingredientes -->
+                        <td>{{ venta.estado }}</td>
+                        <td>
+                            {% if venta.estado == 'PENDIENTE' %}
+                                <a href="{% url 'cambiar_estado_venta_cocina' venta.id 'EN_PROCESO' %}" class="button">Marcar En Proceso</a>
+                            {% elif venta.estado == 'EN_PROCESO' %}
+                                <a href="{% url 'cambiar_estado_venta_cocina' venta.id 'PREPARADO' %}" class="button">Marcar Preparado</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
