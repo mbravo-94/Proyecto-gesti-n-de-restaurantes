@@ -28,6 +28,7 @@ urlpatterns = [
     ############################################################################################################################
     path('cocina/', views.vista_cocina, name='pedidos_por_mesa'),
     path('cambiar-estado-venta/<int:pk>/<str:nuevo_estado>/', views.cambiar_estado_venta, name='cambiar_estado_venta'),
+     path('cambiar-estado-venta-ajax/<int:pk>/<str:nuevo_estado>/', views.cambiar_estado_venta_ajax, name='cambiar_estado_venta_ajax'),
     #############################################################################################################################
     path('ventas/', views.venta_list, name='venta_list'),
 

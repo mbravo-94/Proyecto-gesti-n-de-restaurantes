@@ -1,4 +1,3 @@
-<!-- administracion/templates/administracion/vista_camarero.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,17 +21,16 @@
             </thead>
             <tbody>
                 {% for orden in ordenes %}
-                <tr>
+                <tr id="orden-{{ orden.id }}">
                     <td>{{ orden.mesa.numero }}</td>
                     <td>{{ orden.item.nombre }}</td>
                     <td>{{ orden.cantidad }}</td>
-                    <td>{{ orden.estado }}</td>
+                    <td id="estado-{{ orden.id }}">{{ orden.estado }}</td>
                     <td>
                         {% if orden.estado == 'PENDIENTE' %}
-                            <a href="{% url 'cambiar_estado_venta' orden.id 'EN_PROCESO' %}?next={{ request.path }}" class="btn btn-warning btn-sm">Marcar como En Proceso</a>
-                        {% elif orden.estado == 'EN_PROCESO' %}
-                            <a href="{% url 'cambiar_estado_venta' orden.id 'ENTREGADO' %}?next={{ request.path }}" class="btn btn-info btn-sm">Marcar como Entregado</a>
-                        
+                            <button class="btn btn-warning btn-sm" onclick="cambiarEstado({{ orden.id }}, 'EN_PROCESO')">Marcar como En Proceso</button>
+                        {% elif orden.estado == 'EN PROCESO' %}
+                            <button class="btn btn-info btn-sm" onclick="cambiarEstado({{ orden.id }}, 'ENTREGADO')">Marcar como Entregado</button>
                         {% endif %}
                     </td>
                 </tr>
@@ -40,5 +38,39 @@
             </tbody>
         </table>
     </div>
+ <!-- Javascript para que no se refresque la pagina cuando tocas el boton de en proceso-->
+   <script>
+        function cambiarEstado(ventaId, nuevoEstado) {
+            const url = `/administracion/cambiar-estado-venta-ajax/${ventaId}/${nuevoEstado}/`;
+    
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}', // Asegúrate de incluir el token CSRF
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(`estado-${ventaId}`).innerText = data.nuevo_estado;
+                    // Cambiar el botón basado en el nuevo estado
+                    let button = document.querySelector(`#orden-${ventaId} button`);
+                    if (data.nuevo_estado === 'EN_PROCESO') {
+                        button.innerText = 'Marcar como Entregado';
+                        button.classList.remove('btn-warning');
+                        button.classList.add('btn-info');
+                        button.setAttribute('onclick', `cambiarEstado(${ventaId}, 'ENTREGADO')`);
+                    } else if (data.nuevo_estado === 'ENTREGADO') {
+                        button.remove(); // Remover el botón si no hay más acciones disponibles
+                    }
+                } else {
+                    alert('No se pudo cambiar el estado');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script> 
+    
 </body>
 </html>

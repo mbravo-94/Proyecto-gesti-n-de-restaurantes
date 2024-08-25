@@ -1,10 +1,13 @@
 {% extends "administracion/base.html" %}
 
+{% load custom_filters %}  <!-- Cargar los filtros personalizados -->
+
 {% block content %}
 <h1>Lista de Ventas</h1>
 <table class="table table-striped">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Fecha</th>
             <th>Menú</th>
             <th>Mesa</th>
@@ -16,12 +19,16 @@
     <tbody>
         {% for venta in ventas %}
         <tr>
+            <td>{{ venta.id }}</td>
             <td>{{ venta.fecha }}</td>
-            <td>{{ venta.menu }}</td>
-            <td>{{ venta.mesa }}</td>
+            <td>{{ venta.item.nombre }}</td>
+            <td>{{ venta.mesa.numero }}</td>
             <td>{{ venta.cantidad }}</td>
-            <td>{{ venta.precio}}</td>
-            <td>{{ venta.total }}€</td>
+
+            <!-- Mostrar el precio total por sesión solo en la primera fila de cada sesión -->
+            
+            
+            <td>{{ venta.precio|multiply:venta.cantidad }}€</td> <!-- Total por venta -->
         </tr>
         {% endfor %}
     </tbody>

@@ -4,6 +4,10 @@ from .models import Menu, Mesa, Empleado, Venta
 from .forms import MenuForm, MesaForm, EmpleadoForm, VentaForm
 from django.urls import reverse_lazy, reverse
 from django.views.generic import DeleteView
+from django.db.models import Sum ##############
+from django.http import JsonResponse
+
+
 
 
 ########################## Vistas para Menu ###########################
@@ -146,17 +150,27 @@ def vista_camarero(request):
 
 def venta_list(request):
     ventas = Venta.objects.all()
-    return render(request, 'administracion/venta_list.html', {'ventas': ventas})
+     # Calcular el total de precios por mesa
+    ventas_por_mesa = Venta.objects.values('mesa__numero').annotate(total_precio=Sum('precio')).order_by('mesa__numero')
 
-def venta_create(request):
+    # Crear un diccionario para asociar la mesa con su total
+    sumatorio_por_mesa = {venta['mesa__numero']: venta['total_precio'] for venta in ventas_por_mesa}
+
+    return render(request, 'administracion/venta_list.html', {'ventas': ventas, 'sumatorio_por_mesa': sumatorio_por_mesa})
+
+def venta_create(request): ######################################################################################################################################################
     if request.method == 'POST':
         form = VentaForm(request.POST)
         if form.is_valid():
-            form.save()
+            venta = form.save(commit=False)
+            venta.precio = venta.item.precio * venta.cantidad  # Calcular el precio total
+            venta.save()
             return redirect('venta_list')
     else:
         form = VentaForm()
     return render(request, 'administracion/venta_form.html', {'form': form})
+
+
 
 def venta_edit(request, pk):
     venta = get_object_or_404(Venta, pk=pk)
@@ -174,7 +188,7 @@ class VentaDelete(DeleteView):
     template_name = 'administracion/venta_confirm_delete.html'
     success_url = reverse_lazy('venta_list')
 
-def cambiar_estado_venta(request, pk, nuevo_estado):
+def cambiar_estado_venta(request, pk, nuevo_estado):###########################################################################################################################
     venta = get_object_or_404(Venta, pk=pk)
     venta.estado = nuevo_estado
     venta.save()
@@ -185,6 +199,24 @@ def cambiar_estado_venta(request, pk, nuevo_estado):
         return redirect(next_url)
     else:
         return redirect('index')
+ 
+def cambiar_estado_venta_ajax(request, pk, nuevo_estado): #######################################################################################
+    if request.method == 'POST':
+        venta = get_object_or_404(Venta, pk=pk)
+        venta.estado = nuevo_estado
+        venta.save()
+        return JsonResponse({'success': True, 'nuevo_estado': nuevo_estado})
+    return JsonResponse({'success': False})   
+    
+
+def ventas_por_mesa(request):
+    # Agrupar las ventas por mesa y sesión (transacción) y sumar los precios
+    ventas_por_transaccion = Venta.objects.values('mesa__numero', 'transaccion_id').annotate(total_precio=Sum('precio')).order_by('mesa__numero', 'transaccion_id')
+
+    # Obtener las ventas individuales
+    ventas = Venta.objects.all().order_by('mesa__numero', 'transaccion_id')
+
+    return render(request, 'administracion/venta_list.html', {'ventas': ventas, 'ventas_por_transaccion': ventas_por_transaccion})
 
 
 

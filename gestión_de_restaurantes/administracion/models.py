@@ -1,4 +1,5 @@
 from django.db import models
+import uuid # Esto es para poner un id por transaccion
 
 class Menu(models.Model):
     nombre = models.CharField(max_length=100)
@@ -56,7 +57,7 @@ class Venta(models.Model):
         ('PENDIENTE', 'Pendiente'),
         ('EN_PROCESO', 'En Proceso'),
         ('ENTREGADO', 'Entregado'),
-        ('PENDIENTE DE PAGO', 'Pendiente de Pago'),
+        ('PENDIENTE_DE_PAGO', 'Pendiente de Pago'),
         ('COMPLETADA', 'Completada'),
     ]
     
@@ -66,6 +67,15 @@ class Venta(models.Model):
     cantidad = models.IntegerField()
     mesa = models.ForeignKey('Mesa', on_delete=models.CASCADE)
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='PENDIENTE')
+    precio = models.DecimalField(max_digits=10, decimal_places=2, null = True, blank = True)
+    transaccion_id = models.UUIDField(default=uuid.uuid4, editable=False)  # Creamos un id para cada transacción
+
+    
+    def save(self, *args, **kwargs):
+        # Calcular el precio si no está ya establecido
+        if self.precio is None:
+            self.precio = self.item.precio * self.cantidad
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'Venta de {self.cantidad} {self.item.nombre} el {self.fecha}'
