@@ -1,5 +1,7 @@
 {% extends "administracion/base.html" %}
 
+
+
 {% block content %}
 <h1>Lista de Ventas</h1>
 <table class="table table-striped">
@@ -9,6 +11,8 @@
             <th>Menú</th>
             <th>Cantidad</th>
             <th>Total</th>
+            <th>Propinas</th>
+            <th>Acciones</th> <!-- Nueva columna para acciones -->
         </tr>
     </thead>
     <tbody>
@@ -18,6 +22,10 @@
             <td>{{ venta.menu }}</td>
             <td>{{ venta.cantidad }}</td>
             <td>{{ venta.total }}€</td>
+            <td>{{ venta.propina }}€</td>
+            <td>
+                <a href="{% url 'agregar_propina' venta.id %}" class="btn btn-success">Dar Propina</a> <!-- Botón para dar propina -->
+            </td>
         </tr>
         {% endfor %}
     </tbody>

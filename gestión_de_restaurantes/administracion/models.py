@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Menu(models.Model):
     nombre = models.CharField(max_length=100)
     precio = models.DecimalField(max_digits=6, decimal_places=2)
@@ -69,6 +68,8 @@ class Venta(models.Model):
     cantidad = models.IntegerField()
     mesa = models.ForeignKey('Mesa', on_delete=models.CASCADE)
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='PENDIENTE')
+    total = models.DecimalField(max_digits=10, decimal_places=2)
+    propina = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # Campo de propina agregado
 
     def __str__(self):
         return f'Venta de {self.cantidad} {self.item.nombre} el {self.fecha}'
@@ -77,3 +78,4 @@ class Venta(models.Model):
         verbose_name = 'Venta'
         verbose_name_plural = 'Ventas'
         ordering = ['fecha']
+

@@ -8,7 +8,7 @@ CATEGORIA_CHOICES = [
     ('Ensalada', 'Ensalada'),
     ('Postre', 'Postre'),
     ('Bebida', 'Bebida'),
-    # Se puede añadir mnas categorias si fuera necesario
+    # Se pueden añadir más categorías si fuera necesario
 ]
 
 class MenuForm(forms.ModelForm):
@@ -38,8 +38,9 @@ class EmpleadoForm(forms.ModelForm):
 class VentaForm(forms.ModelForm):
     class Meta:
         model = Venta
-        fields = ['item', 'cantidad']
+        fields = ['item', 'cantidad', 'propina']  # Incluye el campo propina
         widgets = {
             'item': forms.Select(),
             'cantidad': forms.NumberInput(attrs={'min': 1}),
+            'propina': forms.NumberInput(attrs={'min': 0, 'step': '0.01'}),  # Widget para el campo de propina
         }

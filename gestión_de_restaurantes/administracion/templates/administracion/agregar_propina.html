@@ -1,0 +1,23 @@
+{% extends "administracion/base.html" %}
+
+
+{% block content %}
+<h1>Agregar Propina</h1>
+
+<p><strong>Fecha:</strong> {{ venta.fecha }}</p>
+<p><strong>Menú:</strong> {{ venta.menu }}</p>
+<p><strong>Cantidad:</strong> {{ venta.cantidad }}</p>
+<p><strong>Total:</strong> {{ venta.total }}€</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="propina">Propina:</label>
+        <input type="number" step="0.01" min="0" name="propina" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Agregar Propina</button>
+</form>
+
+{% endblock %}
+
+
